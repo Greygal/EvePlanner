@@ -36,3 +36,5 @@ nosetests.xml
 
 # Intellij Idea
 atlassian-ide-plugin.xml
+.idea/workspace.xml
+.idea/tasks.xml
