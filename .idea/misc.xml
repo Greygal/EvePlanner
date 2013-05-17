@@ -88,7 +88,7 @@
   </component>
   <component name="IdProvider" IDEtalkID="DD4410B26EDCF54B8EAEE4FBF7DC1CCF" />
   <component name="ProjectKey">
-    <option name="state" value="git@github.com:stkiller/EvePlanner.git" />
+    <option name="state" value="https://github.com/stkiller/EvePlanner.git" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="Python 2.7.5 (D:/apps/Python2.7.5/python.exe)" project-jdk-type="Python SDK">
     <output url="file://$PROJECT_DIR$/out" />
