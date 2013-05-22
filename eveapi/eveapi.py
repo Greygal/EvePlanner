@@ -404,6 +404,7 @@ class _RootContext(_Context):
             # implementor is not handling fallbacks...
             return _ParseXML(response, True, store and (lambda obj: cache.store(self._host, path, kw, response, obj)))
 
+
 #-----------------------------------------------------------------------------
 # XML Parser
 #-----------------------------------------------------------------------------

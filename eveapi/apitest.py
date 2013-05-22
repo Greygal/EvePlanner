@@ -25,7 +25,7 @@ import eveapi
 import ConfigParser
 
 parser = ConfigParser.ConfigParser()
-parser.read('api_auth.config')
+parser.read('../config/api_auth.config')
 YOUR_KEYID = parser.get('Auth Config', 'key')
 YOUR_VCODE = parser.get('Auth Config', 'code')
 
