@@ -6,52 +6,93 @@ __author__ = 'apodoprigora'
 
 class EveWrapper(object):
     def __init__(self, api):
-        self.api = api
-        self.skill_groups = None
-        self.all_skills = None
-        self.tree = None
+        self.__api = api
+        self.__skill_groups = None
+        self.__skills = None
+        self.__skills_by_group = None
+        self.__tree = None
 
-    def get_skill_tree(self):
+    def __get_skill_tree(self):
         """
         Returns the whole skill tree : ( Group (groupId, groupName) -> Skill(typeName,groupID,typeID,published)
         """
-        if self.tree is None:
-            self.tree = self.api.eve.SkillTree()
-        return self.tree
+        if self.__tree is None:
+            self.__tree = self.__api.eve.SkillTree()
+        return self.__tree
 
-    def get_skill_groups(self):
+    def read_skill_tree(self):
         """
         Returns a list of all skill groups ( Group class )
         """
-        if self.skill_groups is None:
-            #TODO apodoprigora implement saving groups as dictionary
-            result = []
-            skill_tree = self.get_skill_tree()
+        if self.__skill_groups is None:
+            self.__skill_groups = {}
+            self.__skills = {}
+            self.__skills_by_group = {}
+            skill_tree = self.__get_skill_tree()
             for group in skill_tree.skillGroups:
-                result.append(TreeSkillGroup(group.groupID, group.groupName, group.skills))
-            self.skill_groups = result
-        return self.skill_groups
-
-    def get_all_skills(self):
-        """
-        Returns a list of all available skills ( Skill class )
-        """
-        if self.all_skills is None:
-            result = {}
-            groups = self.get_skill_groups()
-            for group in groups:
+                if group.groupID not in self.__skill_groups:
+                    self.__skill_groups[group.groupID] = TreeSkillGroup(group.groupID, group.groupName)
+                    self.__skills_by_group[group.groupID] = []
                 for skill in group.skills:
-                    result[skill.typeID] = TreeSkill(skill.typeName, skill.groupID, skill.typeID, skill.description)
-            self.all_skills = result
-        return self.all_skills.values()
+                    tree_skill = TreeSkill(skill.typeName, skill.groupID, skill.typeID, skill.description)
+                    self.__skills[skill.typeID] = tree_skill
+                    self.__skills_by_group[group.groupID].append(tree_skill)
 
-    def get_skill_by(self, skill_type_id):
-        if self.all_skills is None:
-            self.get_all_skills()
-        try:
-            return self.all_skills[skill_type_id]
-        except KeyError:
+        if self.__skill_groups is None or self.__skills is None:
+            raise RuntimeError("The data wasn't loaded, something is wrong!")
+
+    def __ensure_data_is_read(self):
+        if self.__skills is None:
+            self.read_skill_tree()
+
+    def get_skills(self):
+        """
+        Returns a list of all available skills ( TreeSkill class )
+        """
+        self.__ensure_data_is_read()
+        return self.__skills.values()
+
+    def get_groups(self):
+        """
+        Returns a list of all available skill groups (TreeSkillGroup class)
+        """
+        return self.__skill_groups.values()
+
+    def get_skill_groups(self):
+        """
+        Returns a list of all available skill groups ( TreeSkillGroup class )
+        """
+        self.__ensure_data_is_read()
+        return self.__skill_groups.values()
+
+    def get_skill_by(self, skill_id):
+        """
+        Returns TreeSkill that has specified id, None if nothing is found
+        """
+        self.__ensure_data_is_read()
+        if skill_id in self.__skills.keys():
+            return self.__skills[skill_id]
+        else:
             return None
+
+    def get_group_by(self, group_id):
+        """
+        Returns TreeSkillGroup that has the specified id, None if nothing is found
+        """
+        self.__ensure_data_is_read()
+        if group_id in self.__skill_groups.keys():
+            return self.__skill_groups[group_id]
+        else:
+            return None
+
+    def get_all_group_skills(self, group_id):
+        """
+        Return a list of all skills from the group with specified id
+        """
+        self.__ensure_data_is_read()
+        if group_id in self.__skills_by_group.keys():
+            return self.__skills_by_group[group_id]
+
 
 
 

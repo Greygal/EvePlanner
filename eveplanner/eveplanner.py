@@ -3,7 +3,6 @@ import time
 from eveapi import eveapi
 from cache_handler import CacheHandler
 from eveapi_wrapper.eve_wrapper import EveWrapper
-from eveapi_objects.eve.tree_skill import TreeSkill
 
 __author__ = 'stkiller'
 
