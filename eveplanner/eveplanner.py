@@ -2,6 +2,8 @@ import ConfigParser
 import time
 from eveapi import eveapi
 from cache_handler import CacheHandler
+from eveapi_wrapper.eve_wrapper import EveWrapper
+from eveapi_objects.eve.tree_skill import TreeSkill
 
 __author__ = 'stkiller'
 
@@ -14,37 +16,26 @@ api = eveapi.EVEAPIConnection(cacheHandler=CacheHandler(debug=False))
 auth = api.auth(keyID=YOUR_KEYID, vCode=YOUR_CODE)
 characters = auth.account.Characters()
 me = auth.character(characters.characters[0].characterID)
-
-
-def get_skill_by(type_id):
-    skill_tree = api.eve.SkillTree()
-    for group in skill_tree.skillGroups:
-        skill = group.skills.Get(type_id, None)
-        if skill:
-            return str(skill.typeName), str(skill.description)
-    return None
-
+eve_wrapper = EveWrapper(api)
 
 training = me.SkillInTraining()
 currently_training = training.skillInTraining == 1
 if currently_training:
     print("Training now:")
-    print("Skill name : %s" % get_skill_by(training.trainingTypeID)[0])
+    print("Skill name : %s" % eve_wrapper.get_skill_by(training.trainingTypeID).name)
     print("Training to level :%d" % training.trainingToLevel)
-    print("Will end at :%s" %
-          time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(training.trainingEndTime)))
+    print("Will end at :%s" % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(training.trainingEndTime)))
 else:
     print("Nothing training now")
 
 print
 skill_queue = me.SkillQueue()
 for skill in skill_queue.skillqueue:
-    name, description = get_skill_by(skill.typeID)
-    print("Skille name : %s\nSkill description : %s" % (name, description))
-    print("Skill level %d" % skill.level)
+    tree_skill = eve_wrapper.get_skill_by(skill.typeID)
+    print("Skill name : %s" % tree_skill.name)
+    print("Skill description : %s" % tree_skill.description)
+    print("Skill level: %d" % skill.level)
     print("Start time : %s" % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(skill.startTime)))
-    print("End time : %s" % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(skill.endTime)))
+    print("End time   : %s" % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(skill.endTime)))
     print
-
-# skill_tree = api.eve.SkillTree
 
