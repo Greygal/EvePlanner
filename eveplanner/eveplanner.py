@@ -21,4 +21,5 @@ char_wrapper = CharacterWrapper(me, eve_wrapper)
 
 for skill in char_wrapper.get_training_queue():
     print(skill)
+    print
 
