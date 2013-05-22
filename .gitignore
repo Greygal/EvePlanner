@@ -38,3 +38,5 @@ nosetests.xml
 atlassian-ide-plugin.xml
 .idea/workspace.xml
 .idea/tasks.xml
+.idea/misc.xml
+EvePlanner.iml
