@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import time
 from eveapi_wrapper.character_wrapper import CharacterWrapper
 from eveapi import eveapi
@@ -7,7 +7,7 @@ from eveapi_wrapper.eve_wrapper import EveWrapper
 
 __author__ = 'stkiller'
 
-parser = ConfigParser.ConfigParser()
+parser = configparser.ConfigParser()
 parser.read('../config/api_auth.config')
 YOUR_KEYID = parser.get('Auth Config', 'key')
 YOUR_CODE = parser.get('Auth Config', 'code')
@@ -21,5 +21,5 @@ char_wrapper = CharacterWrapper(me, eve_wrapper)
 
 for skill in char_wrapper.get_training_queue():
     print(skill)
-    print
+    print()
 

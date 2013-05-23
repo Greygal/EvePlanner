@@ -8,6 +8,9 @@
     <option name="name" value="default" />
     <option name="pathToConfigFileJava" value="$PROJECT_DIR$/../XCU/.settings/org.eclipse.jdt.core.prefs" />
   </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
   <component name="GradleLocalSettings">
     <option name="availableTasks">
       <set>
@@ -90,7 +93,7 @@
   <component name="ProjectKey">
     <option name="state" value="git@github.com:stkiller/EvePlanner.git" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="Python 2.7.5 (D:/apps/Python2.7.5/python.exe)" project-jdk-type="Python SDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="Python 3.3.1 (D:/apps/Python33/python.exe)" project-jdk-type="Python SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

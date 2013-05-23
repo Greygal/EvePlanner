@@ -1,6 +1,6 @@
 import time
 import tempfile
-import cPickle
+import pickle
 import zlib
 import os
 from os.path import join, exists
@@ -23,12 +23,12 @@ class CacheHandler(object):
 
     def log(self, what):
         if self.debug:
-            print "[%d] %s" % (self.count, what)
+            print("[%d] %s" % (self.count, what))
 
 
     def retrieve(self, host, path, params):
         # eveapi asks if we have this request cached
-        key = hash((host, path, frozenset(params.items())))
+        key = hash((host, path, frozenset(list(params.items()))))
 
         self.count += 1  # for logging
 
@@ -43,7 +43,7 @@ class CacheHandler(object):
             if exists(cacheFile):
                 self.log("%s: retrieving from disk" % path)
                 f = open(cacheFile, "rb")
-                cached = self.cache[key] = cPickle.loads(zlib.decompress(f.read()))
+                cached = self.cache[key] = pickle.loads(zlib.decompress(f.read()))
                 f.close()
 
         if cached:
@@ -67,7 +67,7 @@ class CacheHandler(object):
 
     def store(self, host, path, params, doc, obj):
         # eveapi is asking us to cache an item
-        key = hash((host, path, frozenset(params.items())))
+        key = hash((host, path, frozenset(list(params.items()))))
 
         cachedFor = obj.cachedUntil - obj.currentTime
         if cachedFor:
@@ -81,5 +81,5 @@ class CacheHandler(object):
             # store in cache folder
             cacheFile = join(self.tempdir, str(key) + ".cache")
             f = open(cacheFile, "wb")
-            f.write(zlib.compress(cPickle.dumps(cached, -1)))
+            f.write(zlib.compress(pickle.dumps(cached, -1)))
             f.close()

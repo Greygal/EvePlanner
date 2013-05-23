@@ -50,27 +50,27 @@ class EveWrapper(object):
         Returns a list of all available skills ( TreeSkill class )
         """
         self.__ensure_data_is_read()
-        return self.__skills.values()
+        return list(self.__skills.values())
 
     def get_groups(self):
         """
         Returns a list of all available skill groups (TreeSkillGroup class)
         """
-        return self.__skill_groups.values()
+        return list(self.__skill_groups.values())
 
     def get_skill_groups(self):
         """
         Returns a list of all available skill groups ( TreeSkillGroup class )
         """
         self.__ensure_data_is_read()
-        return self.__skill_groups.values()
+        return list(self.__skill_groups.values())
 
     def get_skill_by(self, skill_id):
         """
         Returns TreeSkill that has specified id, None if nothing is found
         """
         self.__ensure_data_is_read()
-        if skill_id in self.__skills.keys():
+        if skill_id in list(self.__skills.keys()):
             return self.__skills[skill_id]
         else:
             return None
@@ -80,7 +80,7 @@ class EveWrapper(object):
         Returns TreeSkillGroup that has the specified id, None if nothing is found
         """
         self.__ensure_data_is_read()
-        if group_id in self.__skill_groups.keys():
+        if group_id in list(self.__skill_groups.keys()):
             return self.__skill_groups[group_id]
         else:
             return None
@@ -90,7 +90,7 @@ class EveWrapper(object):
         Return a list of all skills from the group with specified id
         """
         self.__ensure_data_is_read()
-        if group_id in self.__skills_by_group.keys():
+        if group_id in list(self.__skills_by_group.keys()):
             return self.__skills_by_group[group_id]
 
 

@@ -1,5 +1,5 @@
 from eveapi_objects.character.training_skill import TrainingSkill
-from eve_wrapper import EveWrapper
+from .eve_wrapper import EveWrapper
 
 __author__ = 'apodoprigora'
 
@@ -21,4 +21,4 @@ class CharacterWrapper(object):
 
     def get_training_queue(self):
         self.__ensure_training_data_is_read()
-        return self.__skill_queue.values()
+        return list(self.__skill_queue.values())
