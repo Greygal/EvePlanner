@@ -1,8 +1,8 @@
 import ConfigParser
 import time
-from character_wrapper import CharacterWrapper
+from eveapi_wrapper.character_wrapper import CharacterWrapper
 from eveapi import eveapi
-from cache_handler import CacheHandler
+from eveapi.cache_handler import CacheHandler
 from eveapi_wrapper.eve_wrapper import EveWrapper
 
 __author__ = 'stkiller'

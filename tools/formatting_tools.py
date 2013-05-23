@@ -1,7 +1,7 @@
 import time
 
 __author__ = 'stkiller'
-from constants import *
+from config.constants import *
 
 
 class FormattingTools(object):
