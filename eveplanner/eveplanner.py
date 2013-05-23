@@ -12,7 +12,7 @@ parser.read('../config/api_auth.config')
 YOUR_KEYID = parser.get('Auth Config', 'key')
 YOUR_CODE = parser.get('Auth Config', 'code')
 
-api = eveapi.EVEAPIConnection(cacheHandler=CacheHandler(debug=False))
+api = eveapi.EVEAPIConnection(cacheHandler=CacheHandler(debug=True))
 auth = api.auth(keyID=YOUR_KEYID, vCode=YOUR_CODE)
 characters = auth.account.Characters()
 me = auth.character(characters.characters[0].characterID)

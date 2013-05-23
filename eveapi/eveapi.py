@@ -331,7 +331,7 @@ class _AuthContext(_Context):
 
 class _RootContext(_Context):
     def auth(self, **kw):
-        if len(kw) == 2 and ("keyID" in kw and "vCode" in kw or "userID" in kw and "apiKey" in kw):
+        if len(kw) == 2 and ("keyID" in kw and "vCode" in kw):
             return _AuthContext(self._root, self._path, self.parameters, kw)
         raise ValueError("Must specify keyID and vCode")
 

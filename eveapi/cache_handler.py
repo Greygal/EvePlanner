@@ -1,3 +1,4 @@
+import hashlib
 import time
 import tempfile
 import pickle
@@ -20,15 +21,32 @@ class CacheHandler(object):
         if not exists(self.tempdir):
             os.makedirs(self.tempdir)
 
-
     def log(self, what):
         if self.debug:
             print("[%d] %s" % (self.count, what))
 
+    def get_string_of(self, params):
+        """
+        Due the properties of dict, ensure that the keys are stored in the same order.
+        """
+        result = ""
+        if "keyID" in params:
+            result += str(params["keyID"])
+        if "vCode" in params:
+            result += str(params["vCode"])
+        if "characterID" in params:
+            result += str(params["characterID"])
+        return result
+
+    def get_hash_of(self, host, params, path):
+        result = self.get_string_of(params)
+        hash_sum = hashlib.sha1(pickle.dumps((host, path, result))).hexdigest()[0:32]
+        return hash_sum
 
     def retrieve(self, host, path, params):
         # eveapi asks if we have this request cached
-        key = hash((host, path, frozenset(list(params.items()))))
+        key = self.get_hash_of(host, params, path)
+        self.log("Retrieving key : %s" % key)
 
         self.count += 1  # for logging
 
@@ -67,7 +85,8 @@ class CacheHandler(object):
 
     def store(self, host, path, params, doc, obj):
         # eveapi is asking us to cache an item
-        key = hash((host, path, frozenset(list(params.items()))))
+        key = self.get_hash_of(host, params, path)
+        self.log("Store key : %s" % key)
 
         cachedFor = obj.cachedUntil - obj.currentTime
         if cachedFor:
