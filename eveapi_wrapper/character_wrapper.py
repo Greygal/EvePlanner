@@ -7,6 +7,7 @@ __author__ = 'apodoprigora'
 class CharacterWrapper(object):
     def __init__(self, char_auth_api, eve_wrapper):
         self.__auth_api = char_auth_api
+        assert isinstance(eve_wrapper, EveWrapper), "You should provide a EveWrapper instance here"
         self.__eve_wrapper = eve_wrapper
         self.__skill_queue = None
 
