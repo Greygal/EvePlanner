@@ -1,4 +1,5 @@
 EvePlanner
 ==========
 
-Cross-platform GUI application to monitor and plan Eve Online character's improvements
+Cross-platform GUI application to monitor and plan Eve Online character's improvements.
+Used Python 3.3.1 and GUI library tkinter.
