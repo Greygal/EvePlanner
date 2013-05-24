@@ -18,6 +18,7 @@ class SkillTreeFrame(ttk.Frame):
         self._skill_list = []
         self._initialize_widgets()
         self._initialize_self()
+        self._refresh_data()
 
     def _initialize_skill_frame(self):
         skill_frame = ttk.Frame(master=self, padding=(3, 3, 3, 3))
