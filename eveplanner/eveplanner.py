@@ -37,7 +37,7 @@ class EvePlanner(object):
         if not self.__skill_queue:
             return None
         res = ""
-        for skill in self.__char_wrapper.get_training_queue():
+        for skill in self.__char_wrapper.get_training_queue(update_cache=True):
             res += str(skill)
             res += "\n\n"
         self.__skill_queue.set(res)

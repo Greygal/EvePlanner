@@ -41,55 +41,56 @@ class EveWrapper(object):
         if self.__skill_groups is None or self.__skills is None:
             raise RuntimeError("The data wasn't loaded, something is wrong!")
 
-    def __ensure_data_is_read(self):
-        if self.__skills is None:
+    def __ensure_data_is_read(self, update_cache):
+        if self.__skills is None or update_cache:
             self.read_skill_tree()
 
-    def get_skills(self):
+    def get_skills(self, update_cache=False):
         """
         Returns a list of all available skills ( TreeSkill class )
         """
-        self.__ensure_data_is_read()
+        self.__ensure_data_is_read(update_cache)
         return list(self.__skills.values())
 
-    def get_groups(self):
+    def get_groups(self, update_cache=False):
         """
         Returns a list of all available skill groups (TreeSkillGroup class)
         """
+        self.__ensure_data_is_read(update_cache)
         return list(self.__skill_groups.values())
 
-    def get_skill_groups(self):
+    def get_skill_groups(self, update_cache=False):
         """
         Returns a list of all available skill groups ( TreeSkillGroup class )
         """
-        self.__ensure_data_is_read()
+        self.__ensure_data_is_read(update_cache)
         return list(self.__skill_groups.values())
 
-    def get_skill_by(self, skill_id):
+    def get_skill_by(self, skill_id, update_cache=False):
         """
         Returns TreeSkill that has specified id, None if nothing is found
         """
-        self.__ensure_data_is_read()
+        self.__ensure_data_is_read(update_cache)
         if skill_id in list(self.__skills.keys()):
             return self.__skills[skill_id]
         else:
             return None
 
-    def get_group_by(self, group_id):
+    def get_group_by(self, group_id, update_cache=False):
         """
         Returns TreeSkillGroup that has the specified id, None if nothing is found
         """
-        self.__ensure_data_is_read()
+        self.__ensure_data_is_read(update_cache)
         if group_id in list(self.__skill_groups.keys()):
             return self.__skill_groups[group_id]
         else:
             return None
 
-    def get_all_group_skills(self, group_id):
+    def get_all_group_skills(self, group_id, update_cache=False):
         """
         Return a list of all skills from the group with specified id
         """
-        self.__ensure_data_is_read()
+        self.__ensure_data_is_read(update_cache)
         if group_id in list(self.__skills_by_group.keys()):
             return self.__skills_by_group[group_id]
 

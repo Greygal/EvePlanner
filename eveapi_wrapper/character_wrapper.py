@@ -11,14 +11,14 @@ class CharacterWrapper(object):
         self.__eve_wrapper = eve_wrapper
         self.__skill_queue = None
 
-    def __ensure_training_data_is_read(self):
-        if self.__skill_queue is None:
+    def __ensure_training_data_is_read(self, update_cache):
+        if self.__skill_queue is None or update_cache:
             self.__skill_queue = {}
             for skills in self.__auth_api.SkillQueue().skillqueue:
                 tree_skill = self.__eve_wrapper.get_skill_by(skills.typeID)
                 self.__skill_queue[skills.queuePosition] = TrainingSkill(skills.queuePosition, tree_skill, skills.level, skills.startSP,
                                                                          skills.endSP, skills.startTime, skills.endTime)
 
-    def get_training_queue(self):
-        self.__ensure_training_data_is_read()
+    def get_training_queue(self, update_cache=False):
+        self.__ensure_training_data_is_read(update_cache)
         return list(self.__skill_queue.values())
