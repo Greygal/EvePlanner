@@ -22,3 +22,7 @@ class CharacterWrapper(object):
     def get_training_queue(self, update_cache=False):
         self._ensure_training_data_is_read(update_cache)
         return list(self.__skill_queue.values())
+
+    def get_character_image(self):
+        #http://image.eveonline.com/Character/93329844_512.jpg
+        pass
