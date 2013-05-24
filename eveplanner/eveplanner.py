@@ -7,6 +7,7 @@ from eveapi import eveapi
 from eveapi.cache_handler import CacheHandler
 from eveapi_wrapper.eve_wrapper import EveWrapper
 from eveapi_wrapper.server_wrapper import ServerWrapper
+from ui.skill_tree_frame import SkillTreeFrame
 
 
 __author__ = 'stkiller'
@@ -33,28 +34,16 @@ class EvePlanner(object):
         parser.read('../config/api_auth.config')
         return parser.get('Auth Config', 'key'), parser.get('Auth Config', 'code')
 
-    def __refresh_statistics(self):
-        if not self.__skill_queue:
-            return None
-        res = ""
-        for skill in self.__char_wrapper.get_training_queue(update_cache=True):
-            res += str(skill)
-            res += "\n\n"
-        self.__skill_queue.set(res)
-
     def __init_ui(self):
         self.__root.title("Skill queue statistics")
+        self.__root.rowconfigure(0, weight=1)
+        self.__root.columnconfigure(0, weight=1, minsize=300)
 
-        mainframe = ttk.Frame(self.__root, padding="3 3 12 12")
-        mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-        mainframe.columnconfigure(0, weight=1)
-        mainframe.rowconfigure(0, weight=1)
+        notebook = ttk.Notebook(master=self.__root)
+        notebook.grid(row=0, column=0, sticky="nswe")
 
-        ttk.Label(mainframe, textvariable=self.__skill_queue).grid(column=2, row=2, sticky=(W, E))
-        ttk.Button(mainframe, text="Refresh", command=self.__refresh_statistics).grid(column=3, row=3, sticky=W)
-
-        for child in mainframe.winfo_children():
-            child.grid_configure(padx=5, pady=5)
+        tree_frame = SkillTreeFrame(self.__char_wrapper, master=self.__root)
+        notebook.add(tree_frame, text="Skill tree")
 
         self.__root.mainloop()
 

@@ -15,7 +15,7 @@ class TrainingSkill(object):
 
     @property
     def position(self):
-        return self.__queue_position
+        return self.__queue_position + 1
 
     @property
     def tree_skill(self):
