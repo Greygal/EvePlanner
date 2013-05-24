@@ -16,7 +16,7 @@ __author__ = 'stkiller'
 class EvePlanner(object):
     def __init__(self):
         super().__init__()
-        self.__key, self.__code = self.__read_configuration()
+        self.__key, self.__code = self._read_configuration()
         self.__api = eveapi.EVEAPIConnection(cacheHandler=CacheHandler(debug=True))
         self.__auth = self.__api.auth(keyID=self.__key, vCode=self.__code)
         self.__characters = self.__auth.account.Characters()
@@ -26,15 +26,15 @@ class EvePlanner(object):
         self.__server_wrapper = ServerWrapper(self.__api)
         self.__root = Tk()
         self.__skill_queue = StringVar(master=self.__root, value="No data yet")
-        self.__init_ui()
+        self._init_ui()
 
 
-    def __read_configuration(self):
+    def _read_configuration(self):
         parser = configparser.ConfigParser()
         parser.read('../config/api_auth.config')
         return parser.get('Auth Config', 'key'), parser.get('Auth Config', 'code')
 
-    def __init_ui(self):
+    def _init_ui(self):
         self.__root.title("Skill queue statistics")
         self.__root.rowconfigure(0, weight=1)
         self.__root.columnconfigure(0, weight=1, minsize=300)

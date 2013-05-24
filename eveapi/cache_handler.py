@@ -8,20 +8,21 @@ from os.path import join, exists
 
 
 class CacheHandler(object):
-    # Note: this is an example handler to demonstrate how to use them.
-    # a -real- handler should probably be thread-safe and handle errors
-    # properly (and perhaps use a better hashing scheme).
+    # Should be thread-safe and handle errors properly.
 
     def __init__(self, debug=False):
         self.debug = debug
         self.count = 0
         self.cache = {}
+        self._init_temp_dir()
+
+    def _init_temp_dir(self):
         self.tempdir = join(tempfile.gettempdir(), "eveapi")
-        self.log(self.tempdir)
+        self._log(self.tempdir)
         if not exists(self.tempdir):
             os.makedirs(self.tempdir)
 
-    def log(self, what):
+    def _log(self, what):
         if self.debug:
             print("[%d] %s" % (self.count, what))
 
@@ -46,7 +47,7 @@ class CacheHandler(object):
     def retrieve(self, host, path, params):
         # eveapi asks if we have this request cached
         key = self.get_hash_of(host, params, path)
-        self.log("Retrieving key : %s" % key)
+        self._log("Retrieving key : %s" % key)
 
         self.count += 1  # for logging
 
@@ -59,25 +60,25 @@ class CacheHandler(object):
             # it wasn't cached in memory, but it might be on disk.
             cacheFile = join(self.tempdir, str(key) + ".cache")
             if exists(cacheFile):
-                self.log("%s: retrieving from disk" % path)
+                self._log("%s: retrieving from disk" % path)
                 f = open(cacheFile, "rb")
                 cached = self.cache[key] = pickle.loads(zlib.decompress(f.read()))
                 f.close()
 
         if cached:
             # check if the cached doc is fresh enough
-            self.log("Current time : %d, cached on %s" % (time.time(), cached[0]))
+            self._log("Current time : %d, cached on %s" % (time.time(), cached[0]))
             if time.time() < cached[0]:
-                self.log("%s: returning cached document" % path)
+                self._log("%s: returning cached document" % path)
                 return cached[1]  # return the cached XML doc
 
             # it's stale. purge it.
-            self.log("%s: cache expired, purging!" % path)
+            self._log("%s: cache expired, purging!" % path)
             del self.cache[key]
             if cacheFile:
                 os.remove(cacheFile)
 
-        self.log("%s: not cached, fetching from server..." % path)
+        self._log("%s: not cached, fetching from server..." % path)
         # we didn't get a cache hit so return None to indicate that the data
         # should be requested from the server.
         return None
@@ -86,11 +87,11 @@ class CacheHandler(object):
     def store(self, host, path, params, doc, obj):
         # eveapi is asking us to cache an item
         key = self.get_hash_of(host, params, path)
-        self.log("Store key : %s" % key)
+        self._log("Store key : %s" % key)
 
         cachedFor = obj.cachedUntil - obj.currentTime
         if cachedFor:
-            self.log("%s: cached (%d seconds)" % (path, cachedFor))
+            self._log("%s: cached (%d seconds)" % (path, cachedFor))
 
             cachedUntil = time.time() + cachedFor
 
@@ -102,3 +103,7 @@ class CacheHandler(object):
             f = open(cacheFile, "wb")
             f.write(zlib.compress(pickle.dumps(cached, -1)))
             f.close()
+
+    def purge_all_caches(self):
+        #TODO implement deleting of all caches.
+        pass

@@ -31,11 +31,13 @@ class TestCacheHandler(unittest.TestCase):
             self.assertEqual(hash_code, result)
 
     def test_store_retrieve(self):
-        CacheHandler(debug=debug).store(self.host, self.path, self.params, self.doc, self.obj)
+        handler = CacheHandler(debug=debug)
+        handler.store(self.host, self.path, self.params, self.doc, self.obj)
         time.sleep(2)
-        result = CacheHandler(debug=debug).retrieve(self.host, self.path, self.params)
+        result = handler.retrieve(self.host, self.path, self.params)
         self.assertIsNotNone(result)
         self.assertEqual(self.doc, result)
+        handler.purge_all_caches()
 
     def test_retrieve_expire(self):
         result = CacheHandler(debug=debug).retrieve(self.host, self.path, self.params)
@@ -44,6 +46,13 @@ class TestCacheHandler(unittest.TestCase):
         time.sleep(3)
         result = CacheHandler(debug=debug).retrieve(self.host, self.path, self.params)
         self.assertIsNone(result)
+
+    def test_purge_data(self):
+        handler = CacheHandler(debug=True)
+        handler.store(self.host, self.path, self.params, self.doc, self.obj)
+        handler.purge_all_caches()
+        result = handler.retrieve(self.host, self.path, self.params)
+        self.assertIsNone(result,msg="There should be no message")
 
 
 if __name__ == '__main__':
