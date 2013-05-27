@@ -7,6 +7,7 @@ from eveapi import eveapi
 from eveapi.cache_handler import CacheHandler
 from eveapi_wrapper.eve_wrapper import EveWrapper
 from eveapi_wrapper.server_wrapper import ServerWrapper
+from ui.character_info import CharacterInfoFrame
 from ui.skill_tree_frame import SkillTreeFrame
 
 
@@ -41,6 +42,9 @@ class EvePlanner(object):
 
         notebook = ttk.Notebook(master=self.__root)
         notebook.grid(row=0, column=0, sticky="nswe")
+
+        char_frame = CharacterInfoFrame(master=self.__root)
+        notebook.add(char_frame, text="Character info")
 
         tree_frame = SkillTreeFrame(self.__char_wrapper, master=self.__root)
         notebook.add(tree_frame, text="Skill tree")

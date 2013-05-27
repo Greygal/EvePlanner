@@ -7,4 +7,4 @@ setup(name='EvePlanner',
       author='Podoprigora Andrei',
       packages=['config', 'eveapi', 'eveapi_objects', 'eveapi_objects.account', 'eveapi_objects.character', 'eveapi_objects.corporation',
                 'eveapi_objects.eve', 'eveapi_objects.map', 'eveapi_objects.misc', 'eveapi_objects.server', 'eveapi_wrapper', 'eveplanner',
-                'tools', 'ui'])
+                'tools', 'ui'], requires=['Pillow'])
