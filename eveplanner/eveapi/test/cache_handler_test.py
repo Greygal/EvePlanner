@@ -1,7 +1,6 @@
-from datetime import timedelta
 import unittest
 import time
-from eveapi.cache_handler import CacheHandler
+from eveplanner.eveapi.cache_handler import CacheHandler
 
 __author__ = 'apodoprigora'
 debug = True
@@ -52,7 +51,7 @@ class TestCacheHandler(unittest.TestCase):
         handler.store(self.host, self.path, self.params, self.doc, self.obj)
         handler.purge_all_caches()
         result = handler.retrieve(self.host, self.path, self.params)
-        self.assertIsNone(result,msg="There should be no message")
+        self.assertIsNone(result, msg="There should be no message")
 
 
 if __name__ == '__main__':

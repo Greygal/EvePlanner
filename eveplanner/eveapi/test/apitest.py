@@ -19,11 +19,9 @@ import pickle
 import zlib
 import os
 from os.path import join, exists
-from http.client import HTTPException
 import configparser
-from eveapi import eveapi
-from eveapi.cache_handler import CacheHandler
-from eveapi.eveapi import EveApiError
+from eveplanner.eveapi.eveapi import EveApiError
+from eveplanner.eveapi import eveapi
 
 parser = configparser.ConfigParser()
 parser.read('../config/api_auth.config')

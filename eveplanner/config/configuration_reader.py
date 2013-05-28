@@ -8,7 +8,7 @@ class ConfigurationReader(object):
 
     def read_configuration(self):
         parser = configparser.ConfigParser()
-        parser.read('../config/api_auth.config')
+        parser.read('config/api_auth.config')
         return parser.get('Auth Config', 'key'), parser.get('Auth Config', 'code')
 
 

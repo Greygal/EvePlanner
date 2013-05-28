@@ -1,25 +1,26 @@
 from tkinter import *
 from tkinter import ttk
-from eveapi_wrapper.character_wrapper import CharacterWrapper
-from ui import read_only_text
-from ui.read_only_text import ReadOnlyText
+from eveplanner.ui.read_only_text import ReadOnlyText
 
 __author__ = 'apodoprigora'
 
 
 class SkillTreeFrame(ttk.Frame):
-    def __init__(self, char_wrapper, cache_handler, master=None, cnf={}, **kw):
+    def __init__(self, context_manager, master=None, cnf={}, **kw):
         super().__init__(master=master, **kw)
-        if not isinstance(char_wrapper, CharacterWrapper):
-            raise RuntimeError("There should be a character wrapper")
-        self._char_wrapper = char_wrapper
-        self._cache_handler = cache_handler
+        self._context_manager = context_manager
+        self._context_manager.register_listener(self)
+        self._char_wrapper = None
         self._skill_name_list = StringVar()
         self._skill_description = StringVar(value="Please select a skill")
         self._skill_list = []
         self._refresh_data()
         self._initialize_widgets()
         self._initialize_self()
+
+    def context_changed(self):
+        self._char_wrapper = self._context_manager.char_wrapper
+        self._showPopulation(None, selected_index=0)
 
     def _initialize_skill_frame(self):
         skill_frame = ttk.Frame(master=self, padding=(3, 3, 3, 3))
@@ -51,8 +52,9 @@ class SkillTreeFrame(ttk.Frame):
         self._init_refresh_button()
         self._showPopulation(None, selected_index=0)
 
-
     def _refresh_data(self):
+        if not self._char_wrapper:
+            return None
         self._skill_list = self._char_wrapper.get_training_queue(update_cache=True)
 
         def get_skill_list_element(skill):

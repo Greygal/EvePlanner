@@ -1,5 +1,5 @@
 __author__ = 'stkiller'
-from tools.formatting_tools import FormattingTools
+from eveplanner.tools.formatting_tools import FormattingTools
 
 
 class TrainingSkill(object):
