@@ -47,7 +47,7 @@ class TrainingSkill(object):
 
     @property
     def duration_string(self):
-        return "%d:%d" % divmod(self.duration_in_minutes, 60)
+        return "%02d:%02d" % divmod(self.duration_in_minutes, 60)
 
     def __get_string_time(self, time):
         return self.__formatting_tool.get_formatted_time(

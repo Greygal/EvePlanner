@@ -104,6 +104,7 @@ class CacheHandler(object):
 
     def purge_all_caches(self):
         keys = list(self.cache.keys())
+        self._debug("Deleting all caches")
         for key in keys:
             self._purge_data_by_key(key)
         assert len(self.cache) == 0, "All caches should be purged!"

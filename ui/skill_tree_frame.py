@@ -8,11 +8,12 @@ __author__ = 'apodoprigora'
 
 
 class SkillTreeFrame(ttk.Frame):
-    def __init__(self, char_wrapper, master=None, cnf={}, **kw):
+    def __init__(self, char_wrapper, cache_handler, master=None, cnf={}, **kw):
         super().__init__(master=master, **kw)
         if not isinstance(char_wrapper, CharacterWrapper):
             raise RuntimeError("There should be a character wrapper")
         self._char_wrapper = char_wrapper
+        self._cache_handler = cache_handler
         self._skill_name_list = StringVar()
         self._skill_description = StringVar(value="Please select a skill")
         self._skill_list = []
@@ -65,5 +66,7 @@ class SkillTreeFrame(ttk.Frame):
 
     def _showPopulation(self, index):
         selection = self.__list_box.curselection()
-        self.__text_label.delete("1.0", END)
-        self.__text_label.insert("0.0", self._skill_list[int(selection[0])])
+        selected_pos = int(selection[0])
+        if selected_pos >= 0:
+            self.__text_label.delete("1.0", END)
+            self.__text_label.insert("0.0", self._skill_list[selected_pos])
