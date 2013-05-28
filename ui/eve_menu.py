@@ -11,7 +11,7 @@ class EveMenu(Menu):
 
     def _init_menu(self):
         file_menu = Menu(self, tearoff=0)
-        file_menu.add_command(label="Purge cache", command=self._cache_handler.purge_all_caches)
+        file_menu.add_command(label="Delete cache", command=self._cache_handler.purge_all_caches)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.master.quit)
         self.add_cascade(label="File", menu=file_menu)

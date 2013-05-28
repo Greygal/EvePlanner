@@ -15,11 +15,11 @@ class CharacterInfoFrame(ttk.Frame):
 
     def _init_self(self):
         self.grid(row=0, column=0, sticky="nswe")
-        self.rowconfigure(0, weight=1, minsize=512)
-        self.columnconfigure(0, weight=1, minsize=512)
+        self.rowconfigure(0, weight=1, minsize=250)
+        self.columnconfigure(0, weight=1, minsize=300)
 
     def _init_image(self):
-        URL = "http://image.eveonline.com/Character/93329844_256.jpg"
+        URL = "http://image.eveonline.com/Character/93329844_128.jpg"
         image_bytes = urlopen(URL).read()
         # internal data file
         data_stream = io.BytesIO(image_bytes)

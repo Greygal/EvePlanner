@@ -27,7 +27,7 @@ class TestCacheHandler(unittest.TestCase):
     def test_hash_key(self):
         for i in range(1000):
             dictionary = dict(self.params)
-            result = CacheHandler(debug=debug).get_hash_of(self.host, dictionary, self.path)
+            result = CacheHandler(debug=debug)._get_hash_of(self.host, dictionary, self.path)
             self.assertEqual(hash_code, result)
 
     def test_store_retrieve(self):

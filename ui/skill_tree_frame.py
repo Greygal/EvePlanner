@@ -25,15 +25,15 @@ class SkillTreeFrame(ttk.Frame):
         skill_frame = ttk.Frame(master=self, padding=(3, 3, 3, 3))
         skill_frame.grid(row=0, column=0, sticky="nswe")
         skill_frame.rowconfigure(0, weight=1)
-        skill_frame.columnconfigure(0, weight=1)
-        skill_frame.columnconfigure(2, minsize=400)
+        skill_frame.columnconfigure(0, weight=1, minsize=150)
+        skill_frame.columnconfigure(2, weight=1)
         return skill_frame
 
     def _init_skill_listbox(self, skill_frame):
         self.__list_box = Listbox(master=skill_frame, height=10, listvariable=self._skill_name_list)
         self.__list_box.grid(row=0, column=0, sticky="nswe")
         scrollbar = ttk.Scrollbar(master=skill_frame, orient=VERTICAL, command=self.__list_box.yview)
-        scrollbar.grid(row=0, column=1, sticky="nswe")
+        scrollbar.grid(row=0, column=1, sticky="ns")
         self.__list_box.configure(yscrollcommand=scrollbar.set)
         self.__list_box.bind('<<ListboxSelect>>', self._showPopulation)
 

@@ -23,7 +23,7 @@ class CacheHandler(object):
         if not exists(self.tempdir):
             os.makedirs(self.tempdir)
 
-    def get_string_of(self, params):
+    def _get_string_of(self, params):
         """
         Due the properties of dict, ensure that the keys are stored in the same order.
         """
@@ -36,8 +36,8 @@ class CacheHandler(object):
             result += str(params["characterID"])
         return result
 
-    def get_hash_of(self, host, params, path):
-        result = self.get_string_of(params)
+    def _get_hash_of(self, host, params, path):
+        result = self._get_string_of(params)
         hash_sum = hashlib.sha1(pickle.dumps((host, path, result))).hexdigest()[0:32]
         return hash_sum
 
@@ -49,9 +49,8 @@ class CacheHandler(object):
         cacheFile = self._get_cached_file_by(key)
         if exists(cacheFile):
             self._debug("%s: retrieving from disk" % path)
-            f = open(cacheFile, "rb")
-            cached = self.cache[key] = pickle.loads(zlib.decompress(f.read()))
-            f.close()
+            with open(cacheFile, "rb") as f:
+                cached = self.cache[key] = pickle.loads(zlib.decompress(f.read()))
         return cached
 
     def _ensure_cache_in_memory(self, key, path):
@@ -68,7 +67,7 @@ class CacheHandler(object):
             os.remove(cacheFile)
 
     def retrieve(self, host, path, params):
-        key = self.get_hash_of(host, params, path)
+        key = self._get_hash_of(host, params, path)
         self._debug("Retrieving key : %s" % key)
         self.count += 1  # for logging
         cached = self._ensure_cache_in_memory(key, path)
@@ -87,7 +86,7 @@ class CacheHandler(object):
         return None
 
     def store(self, host, path, params, doc, obj):
-        key = self.get_hash_of(host, params, path)
+        key = self._get_hash_of(host, params, path)
         self._debug("Store key : %s" % key)
 
         cachedFor = obj.cachedUntil - obj.currentTime
@@ -98,9 +97,8 @@ class CacheHandler(object):
 
             # store in cache folder
             cacheFile = join(self.tempdir, str(key) + ".cache")
-            f = open(cacheFile, "wb")
-            f.write(zlib.compress(pickle.dumps(cached, -1)))
-            f.close()
+            with open(cacheFile, "wb") as f:
+                f.write(zlib.compress(pickle.dumps(cached, -1)))
 
     def purge_all_caches(self):
         keys = list(self.cache.keys())
