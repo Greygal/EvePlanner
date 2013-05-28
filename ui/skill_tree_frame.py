@@ -17,9 +17,9 @@ class SkillTreeFrame(ttk.Frame):
         self._skill_name_list = StringVar()
         self._skill_description = StringVar(value="Please select a skill")
         self._skill_list = []
+        self._refresh_data()
         self._initialize_widgets()
         self._initialize_self()
-        self._refresh_data()
 
     def _initialize_skill_frame(self):
         skill_frame = ttk.Frame(master=self, padding=(3, 3, 3, 3))
@@ -49,6 +49,7 @@ class SkillTreeFrame(ttk.Frame):
         self._init_skill_listbox(skill_frame)
         self._init_text_label(skill_frame)
         self._init_refresh_button()
+        self._showPopulation(None, selected_index=0)
 
 
     def _refresh_data(self):
@@ -64,9 +65,17 @@ class SkillTreeFrame(ttk.Frame):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
-    def _showPopulation(self, index):
-        selection = self.__list_box.curselection()
-        selected_pos = int(selection[0])
-        if selected_pos >= 0:
-            self.__text_label.delete("1.0", END)
-            self.__text_label.insert("0.0", self._skill_list[selected_pos])
+    def _set_text_element(self, selected_index):
+        if not self._skill_list:
+            return None
+        self.__text_label.delete("1.0", END)
+        self.__text_label.insert("0.0", self._skill_list[selected_index])
+
+    def _showPopulation(self, event, selected_index=None):
+        if selected_index is not None and 0 <= selected_index:
+            self._set_text_element(selected_index)
+        else:
+            selection = self.__list_box.curselection()
+            selected_pos = int(selection[0])
+            if selected_pos >= 0:
+                self._set_text_element(selected_pos)
