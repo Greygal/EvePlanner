@@ -1,19 +1,22 @@
+from eveplanner.context.context_aware import ContextAware
 from eveplanner.eveapi_objects.eve.tree_skill import TreeSkill
 from eveplanner.eveapi_objects.eve.tree_skill_group import TreeSkillGroup
 
 __author__ = 'apodoprigora'
 
 
-class EveWrapper(object):
-    def __init__(self, api=None):
-        self._api = api
+class EveWrapper(ContextAware):
+    def __init__(self, context_manager):
+        ContextAware.__init__(self, context_manager)
+        self._api = None
         self._skill_groups = None
         self._skills = None
         self._skills_by_group = None
         self._tree = None
 
-    def set_api(self, api):
-        self._api = api
+    def context_changed(self, context_data):
+        self._api = context_data.api
+        self._ensure_data_is_read(update_cache=True)
 
     def _get_skill_tree(self):
         """

@@ -1,19 +1,21 @@
-from eveplanner.context.context_manager import ContextManager
+from eveplanner.context.context_aware import ContextAware
 from eveplanner.eveapi_objects.character.training_skill import TrainingSkill
 from eveplanner.eveapi_wrapper.eve_wrapper import EveWrapper
 
 __author__ = 'apodoprigora'
 
 
-class CharacterWrapper(object):
-    def __init__(self,context_manager, char_auth_api=None, eve_wrapper=None):
-        if not isinstance(eve_wrapper, EveWrapper):
-            raise RuntimeError("You should provide a valid instance of EveWrapper class here")
-        if not isinstance(context_manager, ContextManager):
-            raise RuntimeError("You should provide a valid instance of ContextManager class here")
-        self.__auth_api = char_auth_api
-        self.__eve_wrapper = eve_wrapper
+class CharacterWrapper(ContextAware):
+    def __init__(self,context_manager):
+        ContextAware.__init__(self, context_manager=context_manager)
+        self.__auth_api = None
+        self.__eve_wrapper = None
         self.__skill_queue = None
+
+    def context_changed(self, context_data):
+        self.__auth_api = context_data.auth
+        self.__eve_wrapper = context_data.eve_wrapper
+
 
     def _ensure_training_data_is_read(self, update_cache):
         if self.__skill_queue is None or update_cache:

@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-from eveplanner.context.context_manager import ContextManager
 
 __author__ = 'stkiller'
 
@@ -9,12 +8,11 @@ class ContextAware(object):
 
     def __init__(self, context_manager):
         super().__init__()
-        if not isinstance(context_manager, ContextManager):
-            raise RuntimeError("You should provide a valid ContextManager instance here")
         self._context_manager = context_manager
+        self._context_manager.register_listener(self)
 
     @abstractmethod
-    def context_changed(self):
+    def context_changed(self, context_data):
         pass
 
 
