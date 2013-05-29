@@ -1,6 +1,8 @@
 from eveplanner.context.context_aware import ContextAware
 
 __author__ = 'apodoprigora'
+
+
 class ServerWrapper(ContextAware):
     def __init__(self, context_manager):
         ContextAware.__init__(self, context_manager)
@@ -18,7 +20,7 @@ class ServerWrapper(ContextAware):
         Returns a tuple (server_open, online_players)
         """
         if not self._initialised():
-            return None,None
+            return None, None
         status = self._api.server.ServerStatus()
         return status.serverOpen, status.onlinePlayers
 

@@ -2,16 +2,23 @@ import io
 from tkinter import ttk, Tk
 from urllib.request import urlopen
 from PIL import ImageTk, Image
+from eveplanner.context.context_aware import ContextAware
 
 __author__ = 'stkiller'
 
 
-class CharacterInfoFrame(ttk.Frame):
-    def __init__(self, master=None, **kw):
-        super().__init__(master, **kw)
+class CharacterInfoFrame(ttk.Frame, ContextAware):
+    def __init__(self, context_manager, master=None, **kw):
+        ttk.Frame.__init__(self, master, **kw)
+        ContextAware.__init__(self, context_manager)
         self._image = None
         self._init_self()
         self._init_widgets()
+
+    def context_changed(self, context_data):
+        #TODO implement this when avatar will be loaded correctly
+        pass
+
 
     def _init_self(self):
         self.grid(row=0, column=0, sticky="nswe")

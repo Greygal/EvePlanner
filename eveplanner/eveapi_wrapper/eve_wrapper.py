@@ -16,7 +16,10 @@ class EveWrapper(ContextAware):
 
     def context_changed(self, context_data):
         self._api = context_data.api
+
+    def context_change_ready(self):
         self._ensure_data_is_read(update_cache=True)
+
 
     def _get_skill_tree(self):
         """

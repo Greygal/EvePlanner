@@ -3,6 +3,8 @@ from eveplanner.eveapi_wrapper.eve_wrapper import EveWrapper
 from eveplanner.eveapi_wrapper.server_wrapper import ServerWrapper
 
 __author__ = 'apodoprigora'
+
+
 class ContextData(object):
     def __init__(self, context_manager):
         super().__init__()

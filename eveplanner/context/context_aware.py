@@ -15,4 +15,8 @@ class ContextAware(object):
     def context_changed(self, context_data):
         pass
 
+    @abstractmethod
+    def context_change_ready(self):
+        pass
+
 

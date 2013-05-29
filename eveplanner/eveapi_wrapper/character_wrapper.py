@@ -1,12 +1,11 @@
 from eveplanner.context.context_aware import ContextAware
 from eveplanner.eveapi_objects.character.training_skill import TrainingSkill
-from eveplanner.eveapi_wrapper.eve_wrapper import EveWrapper
 
 __author__ = 'apodoprigora'
 
 
 class CharacterWrapper(ContextAware):
-    def __init__(self,context_manager):
+    def __init__(self, context_manager):
         ContextAware.__init__(self, context_manager=context_manager)
         self.__auth_api = None
         self.__eve_wrapper = None
@@ -15,7 +14,6 @@ class CharacterWrapper(ContextAware):
     def context_changed(self, context_data):
         self.__auth_api = context_data.auth
         self.__eve_wrapper = context_data.eve_wrapper
-
 
     def _ensure_training_data_is_read(self, update_cache):
         if self.__skill_queue is None or update_cache:
@@ -27,7 +25,7 @@ class CharacterWrapper(ContextAware):
 
     def get_training_queue(self, update_cache=False):
         if not self._ensure_initialised():
-            print("Char wrapper not initialized")
+            print("[CharWrapper] not initialized")
             return []
         self._ensure_training_data_is_read(update_cache)
         return list(self.__skill_queue.values())

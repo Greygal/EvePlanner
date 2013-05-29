@@ -1,18 +1,19 @@
 from tkinter import Menu
+from eveplanner.context.context_aware import ContextAware
 
 __author__ = 'stkiller'
 
 
-class EveMenu(Menu):
+class EveMenu(Menu, ContextAware):
     def __init__(self, context_manager, master=None, cnf={}, **kw):
-        super().__init__(master, cnf, **kw)
+        Menu.__init__(self, master, cnf, **kw)
+        ContextAware.__init__(self, context_manager)
         self._cache_handler = None
-        self._context_manager = context_manager
         self._context_manager.register_listener(self)
         self._init_menu()
 
-    def context_changed(self):
-        self._cache_handler = self._context_manager.cache_handler
+    def context_changed(self, context_data):
+        self._cache_handler = context_data.cache_handler
 
     def _purge_cached(self):
         if self._cache_handler:

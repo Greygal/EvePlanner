@@ -370,6 +370,7 @@ class _RootContext(_Context):
                 else:
                     conn = http.client.HTTPConnection(*self._proxy)
 
+            print("Requesting path : %s" % path)
             if kw:
                 conn.request("POST", req, urllib.parse.urlencode(kw), {"Content-type": "application/x-www-form-urlencoded"})
             else:
@@ -527,8 +528,8 @@ class _Parser(object):
                 # the row data is missing attributes that were defined in the rowset.
                 # missing attributes' values will be set to None.
                 fixed = []
-                row_idx = 0;
-                hdr_idx = 0;
+                row_idx = 0
+                hdr_idx = 0
                 numAttr *= 2
                 for col in self.container._cols:
                     if col == attributes[row_idx]:
@@ -655,10 +656,10 @@ class _Parser(object):
                 rs = Rowset()
                 rs.__catch = rs._name = this._name
                 row = [_autocast(attributes[i], attributes[i + 1]) for i in range(0, len(attributes), 2)] + [getattr(this, col) for col in
-                                                                                                              attributes2]
+                                                                                                             attributes2]
                 rs.append(row)
                 row = [getattr(sibling, attributes[i]) for i in range(0, len(attributes), 2)] + [getattr(sibling, col) for col in
-                                                                                                  attributes2]
+                                                                                                 attributes2]
                 rs.append(row)
                 rs._cols = [attributes[i] for i in range(0, len(attributes), 2)] + [col for col in attributes2]
                 setattr(self.container, this._name, rs)
@@ -783,8 +784,10 @@ class Rowset(object):
 
     def SortBy(self, column, reverse=False):
         ix = self._cols.index(column)
+
         def key_retriever(key):
             return str(key[ix])
+
         self.sort(key=key_retriever, reverse=reverse)
 
     def SortedBy(self, column, reverse=False):

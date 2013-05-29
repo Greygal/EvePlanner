@@ -14,13 +14,13 @@ class SkillTreeFrame(ttk.Frame, ContextAware):
         self._skill_name_list = StringVar()
         self._skill_description = StringVar(value="Please select a skill")
         self._skill_list = []
-        self._refresh_data()
         self._initialize_widgets()
         self._initialize_self()
 
-    def context_changed(self):
-        self._char_wrapper = self._context_manager.char_wrapper
-        print("Char wrapper set : %s " % self._char_wrapper)
+    def context_changed(self, context_data):
+        self._char_wrapper = context_data.char_wrapper
+
+    def context_change_ready(self):
         self._refresh_data()
         self._showPopulation(None, selected_index=0)
 
@@ -56,7 +56,7 @@ class SkillTreeFrame(ttk.Frame, ContextAware):
 
     def _refresh_data(self):
         if not self._char_wrapper:
-            print("Char Wrapper not initialized")
+            print("[SkillTreeFrame] Char Wrapper not initialized")
             return None
         self._skill_list = self._char_wrapper.get_training_queue(update_cache=True)
         print("Skill list : %s" % self._skill_list)

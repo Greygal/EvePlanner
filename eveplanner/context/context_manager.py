@@ -19,6 +19,11 @@ class ContextManager(object):
                 listener.context_changed(self._context_data)
             except AttributeError:
                 pass
+        for listener in self._listeners:
+            try:
+                listener.context_change_ready()
+            except AttributeError:
+                pass
 
     def register_listener(self, listener):
         """

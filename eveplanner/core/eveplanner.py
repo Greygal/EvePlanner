@@ -53,7 +53,7 @@ class EvePlanner(object):
     def _init_notebook(self):
         notebook = ttk.Notebook(master=self._root)
         notebook.grid(row=0, column=0, sticky="nswe")
-        char_frame = CharacterInfoFrame(master=self._root)
+        char_frame = CharacterInfoFrame(self._context_manager, master=self._root)
         tree_frame = SkillTreeFrame(self._context_manager, master=self._root)
         notebook.add(char_frame, text="Character info")
         notebook.add(tree_frame, text="Skill tree")
