@@ -9,20 +9,17 @@ class ContextData(object):
     def __init__(self, context_manager):
         super().__init__()
         self._context_manager = context_manager
+        self._eve_wrapper = EveWrapper(self._context_manager)
+        self._char_wrapper = CharacterWrapper(self._context_manager)
+        self._server_wrapper = ServerWrapper(self._context_manager)
         self._auth_manager = None
         self._api = None
         self._auth = None
         self._characters = None
         self._me = None
-        self._eve_wrapper = None
-        self._char_wrapper = None
-        self._server_wrapper = None
 
     def set_current_data(self, auth_manager):
         self._auth_manager = auth_manager
-        self._eve_wrapper = EveWrapper(self._context_manager)
-        self._char_wrapper = CharacterWrapper(self._context_manager)
-        self._server_wrapper = ServerWrapper(self._context_manager)
 
     @property
     def cache_handler(self):

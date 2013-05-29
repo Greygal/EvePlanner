@@ -43,8 +43,3 @@ class CharacterInfoFrame(ttk.Frame, ContextAware):
         label.columnconfigure(0, weight=1)
 
 
-if __name__ == "__main__":
-    root = Tk()
-    frame = CharacterInfoFrame(master=root)
-    frame.master.mainloop()
-

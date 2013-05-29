@@ -11,7 +11,6 @@ class ServerWrapper(ContextAware):
     def context_changed(self, context_data):
         self._api = context_data.api
 
-
     def set_api(self, api):
         self._api = api
 

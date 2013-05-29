@@ -8,7 +8,7 @@ __author__ = 'apodoprigora'
 
 class SkillTreeFrame(ttk.Frame, ContextAware):
     def __init__(self, context_manager, master=None, cnf={}, **kw):
-        Frame.__init__(self, master=master, **kw)
+        ttk.Frame.__init__(self, master=master, **kw)
         ContextAware.__init__(self, context_manager=context_manager)
         self._char_wrapper = None
         self._skill_name_list = StringVar()

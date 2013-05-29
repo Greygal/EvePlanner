@@ -370,7 +370,7 @@ class _RootContext(_Context):
                 else:
                     conn = http.client.HTTPConnection(*self._proxy)
 
-            print("Requesting path : %s" % path)
+            print("Requesting path : %s from host : %s" % (path, self._host))
             if kw:
                 conn.request("POST", req, urllib.parse.urlencode(kw), {"Content-type": "application/x-www-form-urlencoded"})
             else:

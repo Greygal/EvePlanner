@@ -9,7 +9,6 @@ class EveMenu(Menu, ContextAware):
         Menu.__init__(self, master, cnf, **kw)
         ContextAware.__init__(self, context_manager)
         self._cache_handler = None
-        self._context_manager.register_listener(self)
         self._init_menu()
 
     def context_changed(self, context_data):
