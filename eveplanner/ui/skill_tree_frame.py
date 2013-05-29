@@ -1,13 +1,15 @@
 from tkinter import *
 from tkinter import ttk
+from eveplanner.context.context_aware import ContextAware
 from eveplanner.ui.read_only_text import ReadOnlyText
 
 __author__ = 'apodoprigora'
 
 
-class SkillTreeFrame(ttk.Frame):
+class SkillTreeFrame(ttk.Frame, ContextAware):
     def __init__(self, context_manager, master=None, cnf={}, **kw):
         super().__init__(master=master, **kw)
+        super().
         self._context_manager = context_manager
         self._context_manager.register_listener(self)
         self._char_wrapper = None
@@ -20,6 +22,8 @@ class SkillTreeFrame(ttk.Frame):
 
     def context_changed(self):
         self._char_wrapper = self._context_manager.char_wrapper
+        print("Char wrapper set : %s " % self._char_wrapper)
+        self._refresh_data()
         self._showPopulation(None, selected_index=0)
 
     def _initialize_skill_frame(self):
@@ -54,8 +58,10 @@ class SkillTreeFrame(ttk.Frame):
 
     def _refresh_data(self):
         if not self._char_wrapper:
+            print("Char Wrapper not initialized")
             return None
         self._skill_list = self._char_wrapper.get_training_queue(update_cache=True)
+        print("Skill list : %s" % self._skill_list)
 
         def get_skill_list_element(skill):
             return "%d. %s" % (skill.position, skill.tree_skill.name)

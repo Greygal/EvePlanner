@@ -1,3 +1,4 @@
+from eveplanner.context.context_manager import ContextManager
 from eveplanner.eveapi_objects.character.training_skill import TrainingSkill
 from eveplanner.eveapi_wrapper.eve_wrapper import EveWrapper
 
@@ -5,15 +6,14 @@ __author__ = 'apodoprigora'
 
 
 class CharacterWrapper(object):
-    def __init__(self, char_auth_api=None, eve_wrapper=None):
+    def __init__(self,context_manager, char_auth_api=None, eve_wrapper=None):
+        if not isinstance(eve_wrapper, EveWrapper):
+            raise RuntimeError("You should provide a valid instance of EveWrapper class here")
+        if not isinstance(context_manager, ContextManager):
+            raise RuntimeError("You should provide a valid instance of ContextManager class here")
         self.__auth_api = char_auth_api
-        assert isinstance(eve_wrapper, EveWrapper), "You should provide a EveWrapper instance here"
         self.__eve_wrapper = eve_wrapper
         self.__skill_queue = None
-
-    def set_api_and_eve(self, api, eve_wrapper):
-        self.__auth_api = api
-        self.__eve_wrapper = eve_wrapper
 
     def _ensure_training_data_is_read(self, update_cache):
         if self.__skill_queue is None or update_cache:
@@ -25,6 +25,7 @@ class CharacterWrapper(object):
 
     def get_training_queue(self, update_cache=False):
         if not self._ensure_initialised():
+            print("Char wrapper not initialized")
             return []
         self._ensure_training_data_is_read(update_cache)
         return list(self.__skill_queue.values())
