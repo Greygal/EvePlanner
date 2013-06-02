@@ -1,5 +1,5 @@
-from eveapi_objects.character.training_skill import TrainingSkill
-from .eve_wrapper import EveWrapper
+from eveplanner.eveapi_objects.character.training_skill import TrainingSkill
+from eveplanner.eveapi_wrapper.eve_wrapper import EveWrapper
 
 __author__ = 'apodoprigora'
 

@@ -1,5 +1,5 @@
-from eveapi_objects.eve.tree_skill import TreeSkill
-from eveapi_objects.eve.tree_skill_group import TreeSkillGroup
+from eveplanner.eveapi_objects.eve.tree_skill import TreeSkill
+from eveplanner.eveapi_objects.eve.tree_skill_group import TreeSkillGroup
 
 __author__ = 'apodoprigora'
 

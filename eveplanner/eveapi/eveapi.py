@@ -135,12 +135,14 @@
 
 import http.client
 import urllib.parse
-import urllib.request, urllib.parse, urllib.error
+import urllib.request
+import urllib.parse
+import urllib.error
 import copy
-
 from xml.parsers import expat
 from time import strptime
 from calendar import timegm
+
 
 proxy = None
 proxySSL = False

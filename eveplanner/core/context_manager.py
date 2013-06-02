@@ -1,8 +1,4 @@
-from eveapi import eveapi
-from eveapi.cache_handler import CacheHandler
-from eveapi_wrapper.character_wrapper import CharacterWrapper
-from eveapi_wrapper.eve_wrapper import EveWrapper
-from eveapi_wrapper.server_wrapper import ServerWrapper
+from eveplanner.eveapi.cache_handler import CacheHandler
 
 __author__ = 'apodoprigora'
 class ContextManager(object):

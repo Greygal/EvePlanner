@@ -1,7 +1,6 @@
-from datetime import timedelta
 import unittest
 import time
-from eveapi.cache_handler import CacheHandler
+from eveplanner.eveapi.cache_handler import CacheHandler
 
 __author__ = 'apodoprigora'
 debug = True

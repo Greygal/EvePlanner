@@ -1,17 +1,16 @@
-import configparser
-from email import message
 from tkinter import *
 from tkinter import ttk, messagebox
-from config.configuration_reader import ConfigurationReader
 
-from eveapi_wrapper.character_wrapper import CharacterWrapper
-from eveapi import eveapi
-from eveapi.cache_handler import CacheHandler
-from eveapi_wrapper.eve_wrapper import EveWrapper
-from eveapi_wrapper.server_wrapper import ServerWrapper
-from ui.character_info import CharacterInfoFrame
-from ui.eve_menu import EveMenu
 from ui.skill_tree_frame import SkillTreeFrame
+
+from eveplanner.config.configuration_reader import ConfigurationReader
+from eveplanner.eveapi_wrapper.character_wrapper import CharacterWrapper
+from eveplanner.eveapi.cache_handler import CacheHandler
+from eveplanner.eveapi_wrapper.eve_wrapper import EveWrapper
+from eveplanner.eveapi_wrapper.server_wrapper import ServerWrapper
+from eveplanner.eveapi import eveapi
+from eveplanner.ui.character_info import CharacterInfoFrame
+from eveplanner.ui.eve_menu import EveMenu
 
 
 __author__ = 'stkiller'
@@ -58,7 +57,3 @@ class EvePlanner(object):
         notebook.add(tree_frame, text="Skill tree")
 
         self._root.mainloop()
-
-
-if __name__ == "__main__":
-    EvePlanner()

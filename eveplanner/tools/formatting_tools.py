@@ -1,7 +1,7 @@
 import time
 
 __author__ = 'stkiller'
-from config.constants import *
+from eveplanner.config.constants import *
 
 
 class FormattingTools(object):

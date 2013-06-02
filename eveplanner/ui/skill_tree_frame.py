@@ -1,8 +1,7 @@
 from tkinter import *
 from tkinter import ttk
-from eveapi_wrapper.character_wrapper import CharacterWrapper
-from ui import read_only_text
-from ui.read_only_text import ReadOnlyText
+from eveplanner.eveapi_wrapper.character_wrapper import CharacterWrapper
+from eveplanner.ui.read_only_text import ReadOnlyText
 
 __author__ = 'apodoprigora'
 
