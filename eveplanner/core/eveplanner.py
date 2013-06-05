@@ -1,8 +1,6 @@
 from tkinter import *
 from tkinter import ttk, messagebox
 
-from ui.skill_tree_frame import SkillTreeFrame
-
 from eveplanner.config.configuration_reader import ConfigurationReader
 from eveplanner.eveapi_wrapper.character_wrapper import CharacterWrapper
 from eveplanner.eveapi.cache_handler import CacheHandler
@@ -11,6 +9,7 @@ from eveplanner.eveapi_wrapper.server_wrapper import ServerWrapper
 from eveplanner.eveapi import eveapi
 from eveplanner.ui.character_info import CharacterInfoFrame
 from eveplanner.ui.eve_menu import EveMenu
+from eveplanner.ui.skill_tree_frame import SkillTreeFrame
 
 
 __author__ = 'stkiller'
@@ -53,7 +52,7 @@ class EvePlanner(object):
         char_frame = CharacterInfoFrame(master=self._root)
         notebook.add(char_frame, text="Character info")
 
-        tree_frame = SkillTreeFrame(self._char_wrapper, self._cache_handler, master=self._root)
+        tree_frame = SkillTreeFrame(self._char_wrapper, master=self._root)
         notebook.add(tree_frame, text="Skill tree")
 
         self._root.mainloop()
